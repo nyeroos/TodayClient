@@ -29,4 +29,5 @@ public interface NoteDao {
 
     @Query("SELECT * FROM note_table ORDER BY priority DESC")
     LiveData<List<Note>> getAllNotes();
+
 }

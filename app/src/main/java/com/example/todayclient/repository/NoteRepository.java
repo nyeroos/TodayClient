@@ -23,13 +23,13 @@ public class NoteRepository {
     private final AppExecutors appExecutors;
 
     @Inject
-    NoteRepository(AppExecutors appExecutors, NoteDao noteDao, TodayService githubService) {
+    NoteRepository(AppExecutors appExecutors, NoteDao noteDao, TodayService todayService) {
         this.noteDao = noteDao;
-        this.todayService = githubService;
+        this.todayService = todayService;
         this.appExecutors = appExecutors;
     }
 
-    public LiveData<Resource<Note>> loadUser(String login) {
+    public LiveData<Resource<Note>> loadNote(String id) {
         return new NetworkBoundResource<Note,Note>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull Note item) {
@@ -44,13 +44,13 @@ public class NoteRepository {
             @NonNull
             @Override
             protected LiveData<Note> loadFromDb() {
-                return noteDao.findByLogin(login);
+                return noteDao.findById(id);
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<Note>> createCall() {
-                return TodayService.getUser(login);
+                return todayService.getNote(id);
             }
         }.asLiveData();
     }
