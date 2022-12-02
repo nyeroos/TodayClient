@@ -3,6 +3,7 @@ package com.example.todayclient.api;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -28,6 +29,7 @@ public class ApiResponse<T> {
     public final String errorMessage;
     @NonNull
     public final Map<String, String> links;
+    private final String TAG = "ApiResponse";
 
     public ApiResponse(Throwable error) {
         code = 500;
@@ -43,13 +45,14 @@ public class ApiResponse<T> {
             errorMessage = null;
         } else {
             String message = null;
-//            if (response.errorBody() != null) {
-//                try {
-//                    message = response.errorBody().string();
-//                } catch (IOException ignored) {
-//                    Timber.e(ignored, "error while parsing response");
-//                }
-//            }
+            if (response.errorBody() != null) {
+                try {
+                    message = response.errorBody().string();
+                } catch (IOException ignored) {
+                    Log.e(TAG, "error while parsing response");
+
+                }
+            }
             if (message == null || message.trim().length() == 0) {
                 message = response.message();
             }
@@ -74,22 +77,5 @@ public class ApiResponse<T> {
 
     public boolean isSuccessful() {
         return code >= 200 && code < 300;
-    }
-
-    public Integer getNextPage() {
-        String next = links.get(NEXT_LINK);
-        if (next == null) {
-            return null;
-        }
-        Matcher matcher = PAGE_PATTERN.matcher(next);
-        if (!matcher.find() || matcher.groupCount() != 1) {
-            return null;
-        }
-        try {
-            return Integer.parseInt(matcher.group(1));
-        } catch (NumberFormatException ex) {
-            Timber.w("cannot parse next page from %s", next);
-            return null;
-        }
     }
 }

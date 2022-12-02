@@ -41,8 +41,7 @@ dependencies {
 
     //dagger для singleton
     implementation 'com.google.dagger:dagger-android:2.35.1'
-    implementation 'com.google.dagger:dagger-android-support:2.11' // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.x'
+     annotationProcessor 'com.google.dagger:dagger-android-processor:2.x'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.x'
 
     //room
@@ -50,5 +49,13 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.4.3"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.google.code.gson:gson:2.6.2'
+
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
 }

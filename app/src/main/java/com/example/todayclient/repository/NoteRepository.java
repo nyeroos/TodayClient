@@ -23,7 +23,7 @@ public class NoteRepository {
     private final AppExecutors appExecutors;
 
     @Inject
-    NoteRepository(AppExecutors appExecutors, NoteDao noteDao, TodayService todayService) {
+    public NoteRepository(AppExecutors appExecutors, NoteDao noteDao, TodayService todayService) {
         this.noteDao = noteDao;
         this.todayService = todayService;
         this.appExecutors = appExecutors;
